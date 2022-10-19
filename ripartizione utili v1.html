@@ -16,6 +16,8 @@
         <input type="number" id="riserva_legale" name="riserva_legale">% <br>
         Riserva statutaria:
         <input type="number" id="riserva_statutaria" name="riserva_statutaria">% <br>
+        Riserva straordinaria:
+        <input type="number" id="riserva_straordinaria" name="riserva_straordinaria">% <br>
         numero zeri arrotondamento dividendi:
         <input type="number" id="zeri_dividendi" name="zeri_dividendi"> <br>
         <!--Utili a soci promotori:
@@ -32,14 +34,16 @@
                 num_azioni = parseInt(document.getElementById("num_azioni").value);
                 utile_des = parseFloat(document.getElementById("utile_des").value);
                 perc_riserva_legale = parseFloat(document.getElementById("riserva_legale").value);
+                perc_riserva_straordinaria = parseFloat(document.getElementById("riserva_straordinaria").value);
                 perc_riserva_statutaria = parseFloat(document.getElementById("riserva_statutaria").value);
                 zeri_dividendi = parseFloat(document.getElementById("zeri_dividendi").value);
                 utili_ex_novi = parseFloat(document.getElementById("utili_ex_novi").value);
                 //converto la percentuale in valore in euro
                 riserva_legale = utile_des * perc_riserva_legale / 100;
                 riserva_statutaria = utile_des * perc_riserva_statutaria / 100;
+                riserva_straordinaria = utile_des * perc_riserva_straordinaria / 100
                 //calcolo l'utile residuo
-                utile_residuo = utile_des - riserva_legale - riserva_statutaria + utili_ex_novi;
+                utile_residuo = utile_des - riserva_legale - riserva_statutaria - riserva_straordinaria + utili_ex_novi;
                 //trovo il dividendo non ancora arrotondato
                 percentuale_dividendi = utile_residuo / num_azioni;
                 //trovo il dividendo con specifici numeri di decimali
