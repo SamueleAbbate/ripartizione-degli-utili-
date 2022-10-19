@@ -1,0 +1,74 @@
+<html>
+    
+    <head>
+        <h1>Calcolo utili d'esercizio </h1>
+    </head>
+    <body>
+        Numero di azioni:
+        <input type="number" id="num_azioni" name="num_azioni"> <br>
+        Utile d'esercizio: €
+        <input type="number" id="utile_des" name="utile_des"> <br>
+        Utile a nuovo già presenti (se non presenti mettere 0): €
+        <input type="number" id="utili_ex_novi" name="utili_ex_novi"> <br>
+        <!--Perdite:
+        <input type="text" id="perdite" name="perdite"> <br>-->
+        Riserva legale:
+        <input type="number" id="riserva_legale" name="riserva_legale">% <br>
+        Riserva statutaria:
+        <input type="number" id="riserva_statutaria" name="riserva_statutaria">% <br>
+        numero zeri arrotondamento dividendi:
+        <input type="number" id="zeri_dividendi" name="zeri_dividendi"> <br>
+        <!--Utili a soci promotori:
+        <input type="text" id="utili_soci_promotori" name="utili_soci_promotori"> <br>-->
+        <br>
+        <p id="risultato"></p>
+
+        <button type="button" onclick="main()">Calcola</button>
+        
+        <script>
+            
+            function main(){
+                //variabili
+                num_azioni = parseInt(document.getElementById("num_azioni").value);
+                utile_des = parseFloat(document.getElementById("utile_des").value);
+                perc_riserva_legale = parseFloat(document.getElementById("riserva_legale").value);
+                perc_riserva_statutaria = parseFloat(document.getElementById("riserva_statutaria").value);
+                zeri_dividendi = parseFloat(document.getElementById("zeri_dividendi").value);
+                utili_ex_novi = parseFloat(document.getElementById("utili_ex_novi").value);
+                //converto la percentuale in valore in euro
+                riserva_legale = utile_des * perc_riserva_legale / 100;
+                riserva_statutaria = utile_des * perc_riserva_statutaria / 100;
+                //calcolo l'utile residuo
+                utile_residuo = utile_des - riserva_legale - riserva_statutaria + utili_ex_novi;
+                //trovo il dividendo non ancora arrotondato
+                percentuale_dividendi = utile_residuo / num_azioni;
+                //trovo il dividendo con specifici numeri di decimali
+                num_zeri = Math.pow(10, zeri_dividendi)
+                percentuale_finita_dividenti = Math.floor(percentuale_dividendi * num_zeri) / num_zeri
+                //trovo il valore in € dei dividendi
+                dividendi = percentuale_finita_dividenti * num_azioni;
+                //trovo gli utili a nuovo
+                utili_a_nuovo = utile_residuo - dividendi;
+
+                //restituisco i risultati all utente
+                inv = "<br>";
+                riga1 = "utile d'esercizio: €" + utile_des + inv;
+                riga2 = "riserva legale " + perc_riserva_legale + "%: " + riserva_legale + inv;
+                riga3 = "riserva statutaria " + perc_riserva_statutaria + "%: " + riserva_statutaria + inv;
+                riga4 = "utile già presenti: €" + utili_ex_novi + inv;
+                riga5 =  "utile residuo: €" + utile_residuo + inv;
+                riga6 = "dividendi: €" + dividendi + inv;
+                riga7 = "utili a nuovo: €" + utili_a_nuovo + inv;
+
+                risultato = riga1 + riga2 + riga3 + riga4 + riga5 + riga6 + riga7;
+                document.getElementById("risultato").innerHTML = risultato;
+                
+            }
+        
+            
+        </script>
+    </body>
+    <footer>
+        <center>DEV by Condor</center>
+    </footer>
+</html>
